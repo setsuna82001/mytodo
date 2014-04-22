@@ -1,35 +1,37 @@
 class ManageController < ApplicationController
   
-  PAGE_LIMIT = 30
+  PAGE_LIMIT = 5
+  
+  def initialize
+    super
+    @task = Tasklist
+  end
   
 =begin
   #=======================================
   # path:     /
   # methods:  get, post
-  # params:   page      Fixnum or Nil
+  # params:   page      String or Nil
   #=======================================
 =end
   def select
     # set local variable
     setPageNum()
-    
-    # 
-    response = []
-    task = Tasklist.new
-    
-    response = Tasklist.order( :id ).take( 1 )
+    loadTaskList()
     
     
-    render :json => response.to_json if request.post?
-    render :json => response.to_json
+    
+    
+    render :json => @tasklist.to_json if request.post?
+    
   end
 
 =begin
   #=======================================
   # path:     /make
   # methods:  get, post
-  # params:   page      Fixnum or Nil
-  #           uid       Fixnum
+  # params:   page      String or Nil
+  #           uid       String
   #           name      String
   #           detail    String
   #=======================================
@@ -55,9 +57,9 @@ class ManageController < ApplicationController
   #=======================================
   # path:     /change
   # methods:  post
-  # params:   page      Fixnum or Nil
-  #           id        Fixnum
-  #           progress  Fixnum
+  # params:   page      String or Nil
+  #           id        String
+  #           progress  String
   #=======================================
 =end
   def change
@@ -69,8 +71,8 @@ class ManageController < ApplicationController
   #=======================================
   # path:     /del
   # methods:  post
-  # params:   page      Fixnum or Nil
-  #           id        Fixnum
+  # params:   page      String or Nil
+  #           id        String
   #=======================================
 =end
   def del
@@ -78,15 +80,29 @@ class ManageController < ApplicationController
     setPageNum()
   end
   
+=begin
+  #=======================================
+  # path:     /load
+  # methods:  post
+  # params:   page      String
+  #=======================================
+=end
+  def load
+    # set local variable
+    setPageNum()
+  end
   
   private
   def setPageNum
     page = 0
-    page = params[ 'page' ] if params.has_key?( 'page' )
+    page = params[ 'page' ].to_i if params.has_key?( 'page' )
     
     # set local variable
-    @limit  = self::PAGE_LIMIT
+    @limit  = PAGE_LIMIT
     @offset = page * @limit
   end
-
+  
+  def loadTaskList
+    @tasklist = Tasklist.order( :id ).offset( @offset ).take( @limit )
+  end
 end

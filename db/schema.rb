@@ -11,12 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140417102254) do
+ActiveRecord::Schema.define(version: 20140421082117) do
+
+  create_table "genrelists", force: true do |t|
+    t.string   "name",    default: "", null: false
+    t.datetime "updated",              null: false
+  end
+
+  add_index "genrelists", ["id", "name"], name: "key01", unique: true, using: :btree
+  add_index "genrelists", ["id", "updated"], name: "key02", using: :btree
 
   create_table "tasklists", force: true do |t|
     t.string   "name",     default: "", null: false
+    t.integer  "genre_id", default: 0,  null: false
     t.string   "detail",   default: "", null: false
     t.integer  "progress", default: 0,  null: false
+    t.integer  "sortnum",  default: 0,  null: false
     t.datetime "updated",               null: false
   end
 

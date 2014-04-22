@@ -1,0 +1,32 @@
+<pre>
+	<% @tasklist.each do | task |  %>
+		<%= task[ :id ] %>
+	<% end %>
+	
+	<%= @tasklist.last %>
+</pre>
+
+	
+<section class="task">
+<div class="gridly">
+	<div class="brick small"><a class="delete" href="#">×</a></div>
+	<div class="brick small"><a class="delete" href="#">×</a></div>
+	<div class="brick small"><a class="delete" href="#">×</a></div>
+	<div class="brick small"><a class="delete" href="#">×</a></div>
+	<div class="brick small"><a class="delete" href="#">×</a></div>
+	<div class="brick small"><a class="delete" href="#">×</a></div>
+	<div class="brick small"><a class="delete" href="#">×</a></div>
+</div>
+
+<p class="actions">
+	<a class="add button" href="#">Add</a>
+</p>
+
+</section>
+<script>
+  $('.gridly').gridly({
+    base: 60, // px 
+    gutter: 20, // px
+    columns: 12
+  });
+</script>

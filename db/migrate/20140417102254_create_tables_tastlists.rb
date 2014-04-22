@@ -1,4 +1,4 @@
-class CreateTastlists < ActiveRecord::Migration
+class CreateTablesTastlists < ActiveRecord::Migration
   def change
     
     # drop
@@ -9,8 +9,10 @@ class CreateTastlists < ActiveRecord::Migration
     # create
     create_table :tasklists do |t|
       t.string    :name,      null: false, default: ''
+      t.integer   :genre_id,  null: false, default: 0
       t.string    :detail,    null: false, default: ''
       t.integer   :progress,  null: false, default: 0
+      t.integer   :sortnum,   null: false, default: 0
       t.timestamp :updated,   null: false, default: '0000-00-00 00:00:00'
     end
     
